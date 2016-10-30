@@ -1,0 +1,26 @@
+{
+  "name": "cheerio-mongo-hw",
+  "version": "1.0.0",
+  "description": "new scraper with mongo",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rgtalbot/cheerio-mongo-hw.git"
+  },
+  "author": "Ryan Talbot",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rgtalbot/cheerio-mongo-hw/issues"
+  },
+  "homepage": "https://github.com/rgtalbot/cheerio-mongo-hw#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cheerio": "^0.22.0",
+    "express": "^4.14.0",
+    "mongoose": "^4.6.5",
+    "request": "^2.76.0"
+  }
+}
