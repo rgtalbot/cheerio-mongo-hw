@@ -1,0 +1,47 @@
+<div class="container">
+    <div id="wrapper">
+        <h1>Note Scraper</h1>
+        <h2><i>If you can do this...the homework should be no problem.</i></h2>
+    </div>
+    <div class="row">
+        <div class="col-xs-7">
+            <div class="panel panel-default contactPanel" ng-repeat="article in articles">
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-xs-8 col-xs-offset-4">
+                            <h4>{{article.title}}</h4>
+                            <p><a href="{{article.link}}" target="_blank">Link</a></p>
+                            <button class="btn btn-primary" ng-click="showComments(article._id)">Comments</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-5">
+
+
+            <div class="row" ng-show="commentVis">
+                <div class="col-xs-12">
+                    <div id="comments"><h1>Comments</h1></div>
+                </div>
+
+                <div class="col-xs-12" ng-repeat="comment in comments">
+                    <h4> {{comment.title}}</h4>
+                    <p> {{comment.body}}</p>
+                </div>
+                <div class="col-xs-12">
+                    <form>
+                        <input id="titleinput" class="form-control" name="title" ng-model="title"
+                               placeholder="Comment title">
+                        <textarea id="bodyinput" name="body" class="form-control" ng-model="body"
+                                  placeholder="Comment"></textarea>
+                        <button class="btn btn-success" ng-click="saveComment(commentId)">Save</button>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
