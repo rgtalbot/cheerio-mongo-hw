@@ -1,19 +1,20 @@
-app.controller('MainController', ['$scope','$http', function($scope, $http) {
+app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
 
     $scope.commentVis = false;
 
-    $http.get('/articles').then(function successCallback(response) {
+    $scope.getArticles = function () {
+        $http.get('/articles').then(function successCallback(response) {
 
-        $scope.articles = response.data;
-    }, function failCallback(error) {
-        console.log(error)
-    });
+            $scope.articles = response.data;
+        }, function failCallback(error) {
+            console.log(error)
+        });
+    };
+    $scope.getArticles();
 
+    $scope.showComments = function (id) {
 
-    $scope.showComments = function(id) {
-
-        $scope.commentVis = !$scope.commentVis;
-
+        $scope.commentVis = true;
         $http.get('/articles/' + id).then(function successCallback(response) {
 
             $scope.comments = response.data.comments;
@@ -24,19 +25,22 @@ app.controller('MainController', ['$scope','$http', function($scope, $http) {
         })
     };
 
-    $scope.saveComment = function(id) {
+    $scope.saveComment = function (id) {
 
-        $http.post('/articles/' +id, {title: $scope.title, body: $scope.body}).then(function successCallback(response) {
+        $http.post('/articles/' + id, {
+            title: $scope.title,
+            body: $scope.body
+        }).then(function successCallback(response) {
 
             $scope.title = "";
             $scope.body = "";
-            showComments(id);
+            $scope.showComments(id);
+            $scope.getArticles();
 
         }, function failCallback(error) {
             console.log(error);
         })
-    }
-
+    };
 
 
 }]);

@@ -1,32 +1,12 @@
 body{
     /*background-color: #DECADE*/
-    background-color: #F2F6D0
+    background-color: #003366
 }
-#wrapper{
-    width:960px;
-    margin: 0 auto;
-    padding-top: 5%;
-}
-#articles{
-    width:60%;
-    height:700px;
-    display:inline-block;
-    overflow: auto;
-}
-#comments{
-    width:30%;
-    float:right;
-}
-textarea, input{
-    display:block;
-    width:100%;
-    background-color: #FCF5C7;
-}
-input{
+input.form-control{
     height:36px;
     font-size: 24px;
 }
-textarea{
+textarea.form-control{
     height:200px;
     font-size: 18px;
 }
@@ -34,4 +14,17 @@ textarea{
 .container {
     max-width: 1170px;
     margin: 0 auto;
+}
+
+.comment-btn {
+    background-color: #003366;
+    color: #ffffff;
+}
+
+.comments {
+    color: white;
+}
+
+footer {
+    color: white;
 }

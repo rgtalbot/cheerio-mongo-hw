@@ -11,30 +11,55 @@ var Article = require('./models/Article');
 
 router.get('/scrape', function (req, res) {
     //use request to grab the body of the html
-    request("http://www.fark.com/", function (error, response, html) {
+    request('https://www.wired.com/most-popular', function (error, response, html) {
 
         // Load the html into cheerio and save it to a var.
+        // '$' becomes a shorthand for cheerio's selector commands,
+        //  much like jQuery's '$'.
         var $ = cheerio.load(html);
 
+        // an empty array to save the data that we'll scrape
+        var result = [];
 
         // Select each instance of the html body that you want to scrape.
-        $(".headline a").each(function (i, element) {
+        $('h2.brandon').each(function (i, element) {
+
+            var $this = $(element);
+
             var result = {};
 
-            result.title = $(element).text();
-            result.link = $(element).attr('href');
+            result.title = $this.text();
+            result.link = $this.parents('a').attr('href');
+            result.img = $this.closest('.row').find('img').attr('src');
 
             var entry = new Article(result);
 
-            entry.save(function (err, doc) {
+            // Scrape information from the web page, put it in an object
+            // and add it to the result array.
+
+            entry.save(function (err,doc) {
                 if (err)
                     console.log(err);
                 else
                     console.log(doc);
-            })
+            });
+
         });
+
     });
     res.send('Scrape Complete');
+});
+
+router.get('/dump', function (req, res) {
+    Article.remove({}, function(err) {
+        res.send('Articles removed');
+    });
+});
+
+router.get('/dump/comments', function (req,res) {
+    Comment.remove({}, function(err) {
+        res.send('Comments removed');
+    })
 });
 
 router.get('/articles', function (req, res) {
@@ -82,7 +107,7 @@ router.post('/articles/:id', function (req, res) {
             console.log('doc', doc);
             var conditions = {_id: req.params.id}
                 , update = {$push: {comments: doc._id}}
-                , options = {multi: true};
+                , options = {new: true};
 
             //find the article and associate the comment to it
             Article.findOneAndUpdate(conditions, update, options, callback);

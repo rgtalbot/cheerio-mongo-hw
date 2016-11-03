@@ -1,34 +1,43 @@
 <div class="container">
-    <div id="wrapper">
-        <h1>Note Scraper</h1>
-        <h2><i>If you can do this...the homework should be no problem.</i></h2>
-    </div>
-    <div class="row">
-        <div class="col-xs-7">
-            <div class="panel panel-default contactPanel" ng-repeat="article in articles">
-                <div class="panel-body">
 
+    <div class="jumbotron text-center">
+        <h1>WIRED.com Most Popular Articles</h1>
+        <h2><i>Click the Comments button to add a comment</i></h2>
+    </div>
+
+    <div class="row">
+
+        <div class="col-xs-7">
+            <div class="panel panel-default articlePanel" ng-repeat="article in articles">
+                <div class="panel-body">
                     <div class="row">
-                        <div class="col-xs-8 col-xs-offset-4">
+                        <div class="col-xs-4">
+                            <img class="img-responsive" src="{{article.img}}">
+                        </div>
+                        <div class="col-xs-8">
                             <h4>{{article.title}}</h4>
                             <p><a href="{{article.link}}" target="_blank">Link</a></p>
-                            <button class="btn btn-primary" ng-click="showComments(article._id)">Comments</button>
+                            <button class="btn comment-btn" ng-click="showComments(article._id)">Comments:
+                                {{article.comments.length}}</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> <!-- End article list column-->
+
         <div class="col-xs-5">
-
-
             <div class="row" ng-show="commentVis">
                 <div class="col-xs-12">
-                    <div id="comments"><h1>Comments</h1></div>
+                    <div class="text-center comments"><h1>Comments</h1></div>
                 </div>
 
                 <div class="col-xs-12" ng-repeat="comment in comments">
-                    <h4> {{comment.title}}</h4>
-                    <p> {{comment.body}}</p>
+                    <div class="panel panel-default commentPanel">
+                        <div class="panel-body">
+                            <h4> {{comment.title}}</h4>
+                            <p> {{comment.body}}</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-xs-12">
                     <form>
@@ -37,11 +46,11 @@
                         <textarea id="bodyinput" name="body" class="form-control" ng-model="body"
                                   placeholder="Comment"></textarea>
                         <button class="btn btn-success" ng-click="saveComment(commentId)">Save</button>
-
-
                     </form>
                 </div>
             </div>
-        </div>
-    </div>
+        </div> <!-- End comments column -->
+
+    </div> <!-- End row -->
+
 </div>
