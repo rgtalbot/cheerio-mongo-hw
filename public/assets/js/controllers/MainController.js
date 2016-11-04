@@ -13,12 +13,13 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
     $scope.getArticles();
 
     $scope.showComments = function (id) {
-
+        console.log('article id', id);
         $scope.commentVis = true;
         $http.get('/articles/' + id).then(function successCallback(response) {
 
             $scope.comments = response.data.comments;
-            $scope.commentId = response.data._id;
+            console.log($scope.comments);
+            $scope.articleId = response.data._id;
 
         }, function failCallback(error) {
             console.log(error);
@@ -41,6 +42,22 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
             console.log(error);
         })
     };
+
+    $scope.deleteComment = function (id, commentId) {
+        $http.post('/comments/', {
+            id: commentId
+        })
+            .then(function successCallback(response) {
+
+                $scope.showComments(id);
+                $scope.getArticles();
+
+
+            }, function failCallback(error) {
+                console.log(error);
+            });
+
+    }
 
 
 }]);

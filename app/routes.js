@@ -14,8 +14,6 @@ router.get('/scrape', function (req, res) {
     request('https://www.wired.com/most-popular', function (error, response, html) {
 
         // Load the html into cheerio and save it to a var.
-        // '$' becomes a shorthand for cheerio's selector commands,
-        //  much like jQuery's '$'.
         var $ = cheerio.load(html);
 
         // an empty array to save the data that we'll scrape
@@ -36,8 +34,7 @@ router.get('/scrape', function (req, res) {
 
             // Scrape information from the web page, put it in an object
             // and add it to the result array.
-
-            entry.save(function (err,doc) {
+            entry.save(function (err, doc) {
                 if (err)
                     console.log(err);
                 else
@@ -51,13 +48,13 @@ router.get('/scrape', function (req, res) {
 });
 
 router.get('/dump', function (req, res) {
-    Article.remove({}, function(err) {
+    Article.remove({}, function (err) {
         res.send('Articles removed');
     });
 });
 
-router.get('/dump/comments', function (req,res) {
-    Comment.remove({}, function(err) {
+router.get('/dump/comments', function (req, res) {
+    Comment.remove({}, function (err) {
         res.send('Comments removed');
     })
 });
@@ -75,6 +72,24 @@ router.get('/articles', function (req, res) {
 
         //send the articles back with the get
         res.send(articleMap);
+    });
+});
+
+router.post('/comments/', function (req, res) {
+    var commentId = req.body.id;
+
+    Comment.findOneAndRemove({_id: commentId}, function (err, response) {
+        if (err) throw err;
+        Article.update(
+            {"comments": commentId},
+            {$pull: {"comments": commentId}},
+            function (err, response) {
+                if (err)
+                    throw err;
+                else
+                    res.json(response);
+            }
+        );
     });
 });
 

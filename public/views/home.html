@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mainContainer">
 
     <div class="jumbotron text-center">
         <h1>WIRED.com Most Popular Articles</h1>
@@ -16,7 +16,7 @@
                         </div>
                         <div class="col-xs-8">
                             <h4>{{article.title}}</h4>
-                            <p><a href="{{article.link}}" target="_blank">Link</a></p>
+                            <p><a href="{{article.link}}" target="_blank">{{article.link}}</a></p>
                             <button class="btn comment-btn" ng-click="showComments(article._id)">Comments:
                                 {{article.comments.length}}</button>
                         </div>
@@ -34,6 +34,8 @@
                 <div class="col-xs-12" ng-repeat="comment in comments">
                     <div class="panel panel-default commentPanel">
                         <div class="panel-body">
+                            <span class="glyphicon glyphicon-remove btn removeBtn"
+                                  ng-click="deleteComment(articleId, comment._id)"></span>
                             <h4> {{comment.title}}</h4>
                             <p> {{comment.body}}</p>
                         </div>
@@ -45,7 +47,7 @@
                                placeholder="Comment title">
                         <textarea id="bodyinput" name="body" class="form-control" ng-model="body"
                                   placeholder="Comment"></textarea>
-                        <button class="btn btn-success" ng-click="saveComment(commentId)">Save</button>
+                        <button class="btn btn-success" ng-click="saveComment(articleId)">Save</button>
                     </form>
                 </div>
             </div>
